@@ -1,4 +1,4 @@
-# Algoritmus Vizualizátor
+# Algorithm Visualizer
 
 ## Bevezetés
 Az Algoritmus Vizualizátor egy interaktív webes alkalmazás, amely látványos módon szemlélteti különféle algoritmusok működését. A platform célja, hogy közérthető és vizuálisan követhető formában segítse az algoritmusok tanulását és megértését – legyen szó oktatásról, gyakorlásról vagy szakmai elmélyülésről.
