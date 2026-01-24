@@ -31,6 +31,6 @@
 </style>
 
 <div class="header">
-    <button class="title" on:click={() => closeMenu()}>Algoritmus Vizualizátor.</button>
+    <button class="title" on:click={() => closeMenu()}>Algorithm Visualizer.</button>
     <DropdownButton></DropdownButton>
 </div>

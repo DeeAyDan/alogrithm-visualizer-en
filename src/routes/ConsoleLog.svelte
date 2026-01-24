@@ -6,7 +6,7 @@
 </script>
 
 <div class="console-log-container">
-	<div class="tag">Lépések</div>
+	<div class="tag">Steps</div>
 	<div class="console">
 		<ol class="console-list">
 			{#each $consoleLog as line}

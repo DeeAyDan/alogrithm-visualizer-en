@@ -25,6 +25,7 @@
 // Keep progress in sync but clamp to the available total to avoid NaN/overflow
 $: clampedStep = Math.min($currentStep, $totalSteps || 0);
 $: progress.set(clampedStep);
+
 // Calculate percentage safely even when totalSteps is 0 during initial render
 $: progressPercentage = $totalSteps > 0 ? ($progress / $totalSteps) * 100 + '%' : '0%';
     
@@ -67,13 +68,13 @@ $: progressPercentage = $totalSteps > 0 ? ($progress / $totalSteps) * 100 + '%' 
     {#if $algorithmStatus === 'idle'}
         <button class="play-button" on:click={handleStart}>Start</button>
     {:else if $algorithmStatus === 'running'}
-        <button class="play-button" on:click={handlePause}>Szünet</button>
+        <button class="play-button" on:click={handlePause}>Pause</button>
     {:else if $algorithmStatus === 'paused'}
         <button class="play-button" class:disabled={resumeButtonCooldown} on:click={handleResume}>
-            Folytatás
+            Resume
         </button>
     {:else if $algorithmStatus === 'finished'}
-        <button class="play-button" on:click={handleReset}>Visszaállítás</button>
+        <button class="play-button" on:click={handleReset}>Reset</button>
     {/if}
     
     <!-- Léptetési információ -->
@@ -85,7 +86,7 @@ $: progressPercentage = $totalSteps > 0 ? ($progress / $totalSteps) * 100 + '%' 
     
     <!-- Sebességcsúszka -->
     <div class="speed-slider">
-        <label for="speed-range">Sebesség</label>
+        <label for="speed-range">Speed</label>
         <input
             type="range"
             class="slider"

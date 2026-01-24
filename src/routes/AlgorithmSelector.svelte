@@ -33,91 +33,91 @@
 <div class="input-container">
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('divideAndConquer')}>
-			Oszd meg és uralkodj
+			Divide And Conquer
 		</button>
 		<div class="algorithm-list {algorithmGroups.divideAndConquer ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('factorialCalculator')}>Faktoriális számítás</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('towersOfHanoi')}>Hanoi tornyai</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('hilbertCurves')}>Hilbert-görbék</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('factorialCalculator')}>Factorial Calculation</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('towersOfHanoi')}>Towers of Hanoi</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('hilbertCurves')}>Hilbert Curves</button>
 		</div>
 	</div>
 
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('dynamicProgramming')}>
-			Dinamikus programozás
+			Dynamic Programming
 		</button>
 		<div class="algorithm-list {algorithmGroups.dynamicProgramming ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('maxSumPath')}>Legnagyobb összegű út</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('coinChange')}>Pénzváltó algoritmus</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('maxSumPath')}>Maximum Sum Path</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('coinChange')}>Coin Change Algorithm</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('greedyAlgorithms')}>
-			Mohó algoritmusok
+			Greedy Algorithms
 		</button>
 		<div class="algorithm-list {algorithmGroups.greedyAlgorithms ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('fractionalKnapsack')}>Tört hátizsák probléma</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('fractionalKnapsackRep')}>Tört hátizsák probléma (ismétléssel)</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('travelingProblem')}>Utazási probléma</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('fractionalKnapsack')}>Fractional Knapsack (Without Repetition)</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('fractionalKnapsackRep')}>Fractional Knapsack (With Repetition)</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('travelingProblem')}>Traveling Salesman Problem</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('sortingAlgorithms')}>
-			Rendezési algoritmusok
+			Sorting Algorithms
 		</button>
 		<div class="algorithm-list {algorithmGroups.sortingAlgorithms ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('mergeSort')}>Összefésüléses rendezés</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('insertionSort')}>Beszúrásos rendezés</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('heapSort')}>Kupacrendezés</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('quickSort')}>Gyorsrendezés</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('mergeSort')}>Merge Sort</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('insertionSort')}>Insertion Sort</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('heapSort')}>Heap Sort</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('quickSort')}>Quick Sort</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('searchTrees')}>
-			Keresőfák
+			Tree Algorithms
 		</button>
 		<div class="algorithm-list {algorithmGroups.searchTrees ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('binaryTree')}>Bináris fa</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('avlTree')}>AVL-fa</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('bTree')}>B-fa</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('redBlackTree')}>Piros-fekete fa</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('binaryTree')}>Binary Tree</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('avlTree')}>AVL Tree</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('bTree')}>B Tree</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('redBlackTree')}>Red–Black Tree</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('stringAlgorithms')}>
-			Sztring algoritmusok
+			String Algorithms
 		</button>
 		<div class="algorithm-list {algorithmGroups.stringAlgorithms ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('rabinKarp')}>Rabin-Karp algoritmus</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('knuthMorrisPratt')}>Knuth-Morris-Pratt algoritmus</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('rabinKarp')}>Rabin–Karp Algorithm</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('knuthMorrisPratt')}>Knuth–Morris–Pratt Algorithm</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('shortestPath')}>
-			Legrövidebb út keresése
+			Shortest Path Search
 		</button>
 		<div class="algorithm-list {algorithmGroups.shortestPath ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('dijkstraShortestPath')}>Dijkstra algoritmus</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('bellmanFordShortestPath')}>Bellman-Ford algoritmus</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('dijkstraShortestPath')}>Dijkstra’s Shortest Path</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('bellmanFordShortestPath')}>Bellman–Ford Shortest Path</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('minimumSpanningTree')}>
-			Minimális feszítőfák
+			Minimum Spanning Tree
 		</button>
 		<div class="algorithm-list {algorithmGroups.minimumSpanningTree ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('primMinimumSpanningTree')}>Prim algoritmus</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('kruskalMinimumSpanningTree')}>Kruskal algoritmus</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('primMinimumSpanningTree')}>Prim Algorithm</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('kruskalMinimumSpanningTree')}>Kruskal Algorithm</button>
 		</div>
 	</div>
 	<div class="algorithm-group">
 		<button class="algorithm-group-button" on:click={() => toggleGroup('geometryAlgorithms')}>
-			Geometriai algoritmusok
+			Geometric Algorithms
 		</button>
 		<div class="algorithm-list {algorithmGroups.geometryAlgorithms ? 'visible' : ''}">
-			<button class="algorithm-button" on:click={() => selectAlgorithm('convexHull')}>Konvex burok (Brute Force)</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('jarvisMarch')}>Jarvis menetelés</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('grahamScan')}>Graham pásztázás</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('convexHull')}>Convex Hull (Brute Force)</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('jarvisMarch')}>Jarvis March</button>
+			<button class="algorithm-button" on:click={() => selectAlgorithm('grahamScan')}>Graham Scan</button>
 		</div>
 	</div>
 </div>

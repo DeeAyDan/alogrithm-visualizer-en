@@ -39,7 +39,7 @@
 					<SourceCode />
 				{:else}
 					<div>
-						<h1 class="select-title">Válassz egy algoritmust!</h1>
+						<h1 class="select-title">Select an algorithm!</h1>
 					</div>
 				{/if}
 			</div>

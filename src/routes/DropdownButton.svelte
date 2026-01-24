@@ -34,8 +34,8 @@
 
 <div class="dropdown">
     <button class="dropdown-button" on:click={toggleDropdown}>
-         <span class="arrow {inputVisible ? 'visible' : ''}">Algoritmus választó ▼</span>
-         <span class="arrow {!inputVisible ? 'visible' : ''}">Menü bezárása</span>
+         <span class="arrow {inputVisible ? 'visible' : ''}">Algorithm Selector ▼</span>
+         <span class="arrow {!inputVisible ? 'visible' : ''}">Close Menu</span>
 
     </button>
 </div>
