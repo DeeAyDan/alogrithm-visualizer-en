@@ -56,23 +56,23 @@ function initStores(): void {
 	algorithmStatus.set('idle');
 	consoleLog.set([]);
 	activeLine.set({ start: -1, end: -1 });
-	selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+	selectedAlgorithmSourceCode.set('Choose an operation!');
 }
 
 onMount(initStores);
 
 function validateInput(): boolean {
 	if (elementValue === null || elementValue === undefined) {
-		log('Kérlek adj meg egy értéket!');
+		log('Please enter a value!');
 		return false;
 	} else if (typeof elementValue !== 'number') {
-		log('Kérlek adj meg egy számot!');
+		log('Please enter a number!');
 		return false;
 	} else if (elementValue < 0) {
-		log('Kérlek adj meg egy pozitív számot!');
+		log('Please enter a positive number!');
 		return false;
 	} else if (elementValue > 100) {
-		log('Kérlek adj meg egy 0 és 100 közötti számot!');
+		log('Please enter a number between 0 and 100!');
 		return false;
 	}
 	return true;
@@ -235,13 +235,13 @@ async function insertElement(): Promise<void> {
     algorithmStatus.set('running');
     consoleLog.set([]);
     currentStep.set(0);
-    log(`Beszúrás: ${elementValue}`);
+    log(`Insert: ${elementValue}`);
     updateInsertSourceCode();
 
     const insert = async (node: Node | null, value: number, depth = 0): Promise<Node> => {
         if (depth > LAYOUT.maxDepth - 1) {
             activeLine.set({ start: 3, end: 5 });
-            log(`A fa mélysége nem lehet nagyobb, mint ${LAYOUT.maxDepth}.`);
+            log(`Tree depth cannot be greater than ${LAYOUT.maxDepth}.`);
             await delay(ANIMATION.delay);
             await pauseIfNeeded();
             return node;
@@ -252,26 +252,26 @@ async function insertElement(): Promise<void> {
 
         if (!node) {
             activeLine.set({ start: 7, end: 9 });
-            log(`Beszúrt érték: ${value}`);
+            log(`Inserted value: ${value}`);
             await delay(ANIMATION.delay);
             await pauseIfNeeded();
             return { value, height: 1, x: LAYOUT.startX, y: LAYOUT.startY };
         }
 
         highlightedNode = node;
-        log(`Vizsgált csúcs: ${node.value}`);
+        log(`Examined node: ${node.value}`);
 
         if (value < node.value) {
             activeLine.set({ start: 11, end: 13 });
-            log(`${value} < ${node.value}, balra haladunk`);
+            log(`${value} < ${node.value}, going left`);
             node.left = await insert(node.left, value, depth + 1);
         } else if (value > node.value) {
             activeLine.set({ start: 14, end: 16 });
-            log(`${value} > ${node.value}, jobbra haladunk`);
+            log(`${value} > ${node.value}, going right`);
             node.right = await insert(node.right, value, depth + 1);
         } else {
             activeLine.set({ start: 17, end: 19 });
-            log('Az érték már szerepel a fában.');
+            log('The value already exists in the tree.');
         }
 
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -299,7 +299,7 @@ async function insertElement(): Promise<void> {
         if (bf > 1) {
             const leftBf = balanceFactor(node.left!);
             if (leftBf < 0) {
-                log(`Bal-Jobb eset: ${node.value}`);
+                log(`Left-Right case: ${node.value}`);
                 
                 node.left = await rotateLeft(node.left!);
                 
@@ -318,7 +318,7 @@ async function insertElement(): Promise<void> {
                 await pauseIfNeeded();
                 return balanced;
             } else {
-                log(`Bal-Bal eset: ${node.value}`);
+                log(`Left-Left case: ${node.value}`);
                 
                 const balanced = await rotateRight(node);
                 
@@ -327,7 +327,7 @@ async function insertElement(): Promise<void> {
         } else if (bf < -1) {
             const rightBf = balanceFactor(node.right!);
             if (rightBf > 0) {
-                log(`Jobb-Bal eset: ${node.value}`);
+                log(`Right-Left case: ${node.value}`);
                 
                 node.right = await rotateRight(node.right!);
                 
@@ -346,7 +346,7 @@ async function insertElement(): Promise<void> {
                 await pauseIfNeeded();
                 return balanced;
             } else {
-                log(`Jobb-Jobb eset: ${node.value}`);
+                log(`Right-Right case: ${node.value}`);
                 
                 const balanced = await rotateLeft(node);
                 
@@ -373,36 +373,36 @@ async function searchElement(): Promise<void> {
 	algorithmStatus.set('running');
 	consoleLog.set([]);
 	currentStep.set(0);
-	log(`Keresés: ${elementValue}`);
+	log(`Search: ${elementValue}`);
 	updateSearchSourceCode();
 
 	const search = async (node: Node | null, value: number): Promise<boolean> => {
 		if (!node) {
 			activeLine.set({ start: 3, end: 5 });
-			log('Elem nem található.');
+			log('Element not found.');
 			return false;
 		}
 
 		highlightedNode = node;
-		log(`Vizsgált csúcs: ${node.value}`);
+		log(`Examined node: ${node.value}`);
 		await delay(ANIMATION.delay);
 		await pauseIfNeeded();
 
 		if (value === node.value) {
 			activeLine.set({ start: 7, end: 9 });
-			log(`Érték megtalálva: ${value}`);
+			log(`Value found: ${value}`);
 			await delay(ANIMATION.delay);
 			await pauseIfNeeded();
 			return true;
 		}
 		else if (value < node.value) {
 			activeLine.set({ start: 10, end: 12 });
-			log(`${value} < ${node.value}, balra keresünk`);
+			log(`${value} < ${node.value}, searching left`);
 			return await search(node.left, value);
 		}
 		else {
 			activeLine.set({ start: 13, end: 15 });
-			log(`${value} > ${node.value}, jobbra keresünk`);
+			log(`${value} > ${node.value}, searching right`);
 			return await search(node.right, value);
 		}
 	};
@@ -418,7 +418,7 @@ async function deleteElement(): Promise<void> {
 
 	algorithmStatus.set('running');
 	consoleLog.set([]);
-	log(`Törlés: ${elementValue}`);
+	log(`Delete: ${elementValue}`);
 	updateDeleteSourceCode();
 
 	await delay(ANIMATION.delay);
@@ -427,14 +427,14 @@ async function deleteElement(): Promise<void> {
 	const findMin = async (node: Node): Promise<Node> => {
 		let current = node;
 		highlightedNode = current;
-		log(`Minimum keresése: ${current.value}`);
+		log(`Finding minimum: ${current.value}`);
 		await delay(ANIMATION.delay);
 		await pauseIfNeeded();
 		
 		while (current.left) {
 			current = current.left;
 			highlightedNode = current;
-			log(`Minimum keresése: ${current.value}`);
+			log(`Finding minimum: ${current.value}`);
 			await delay(ANIMATION.delay);
 			await pauseIfNeeded();
 		}
@@ -449,31 +449,31 @@ async function deleteElement(): Promise<void> {
 	const remove = async (node: Node | null, value: number): Promise<Node | null> => {
 		if (!node) {
 			activeLine.set({ start: 11, end: 13 });
-			log('Elem nem található.');
+			log('Element not found.');
 			return null;
 		}
 
 		highlightedNode = node;
-		log(`Vizsgált csúcs: ${node.value}`);
+		log(`Examined node: ${node.value}`);
 		await delay(ANIMATION.delay);
 		await pauseIfNeeded();
 
 		if (value < node.value) {
 			activeLine.set({ start: 15, end: 17 });
-			log(`${value} < ${node.value}, balra keresünk`);
+			log(`${value} < ${node.value}, searching left`);
 			node.left = await remove(node.left, value);
 		} else if (value > node.value) {
 			activeLine.set({ start: 18, end: 20 });
-			log(`${value} > ${node.value}, jobbra keresünk`);
+			log(`${value} > ${node.value}, searching right`);
 			node.right = await remove(node.right, value);
 		} else {
 			if (!node.left && !node.right) {
 				activeLine.set({ start: 22, end: 24 });
-				log(`Levél csúcs törölve: ${value}`);
+				log(`Leaf node deleted: ${value}`);
 				return null;
 			} else if (!node.left) {
 				activeLine.set({ start: 25, end: 27 });
-				log(`Csúcs törölve (${value}), jobb gyerek helyettesíti`);
+				log(`Node deleted (${value}), right child replaces it`);
 
 				if (node.right) {
 					node.right.prevX = node.right.x;
@@ -483,7 +483,7 @@ async function deleteElement(): Promise<void> {
 				return node.right;
 			} else if (!node.right) {
 				activeLine.set({ start: 28, end: 30 });
-				log(`Csúcs törölve (${value}), bal gyerek helyettesíti`);
+				log(`Node deleted (${value}), left child replaces it`);
 
 				if (node.left) {
 					node.left.prevX = node.left.x;
@@ -494,7 +494,7 @@ async function deleteElement(): Promise<void> {
 			} else {
 				activeLine.set({ start: 31, end: 35 });
 				const successor = await findMin(node.right);
-				log(`Két gyermekes csúcs (${value}) helyettesítése ${successor.value} értékkel`);
+				log(`Replacing node with two children (${value}) with value ${successor.value}`);
 
 				const oldValue = node.value;
 				node.value = successor.value;
@@ -502,7 +502,7 @@ async function deleteElement(): Promise<void> {
 				await delay(ANIMATION.delay);
 				await pauseIfNeeded();
 				
-				log(`Érték megváltoztatva: ${oldValue} -> ${successor.value}`);
+				log(`Value changed: ${oldValue} -> ${successor.value}`);
 				node.right = await remove(node.right, successor.value);
 			}
 		}
@@ -511,7 +511,7 @@ async function deleteElement(): Promise<void> {
 		
 		const bf = balanceFactor(node);
 		if (bf > 1 || bf < -1) {
-			log(`Egyensúlyozás szükséges: ${node.value}`);
+			log(`Balancing required: ${node.value}`);
             
             saveCurrentPositions(root);
             
@@ -540,8 +540,8 @@ function resetTree(): void {
 	root = null;
 	consoleLog.set([]);
 	currentStep.set(0);
-	log('Fa törölve.');
-	selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+	log('Tree deleted.');
+	selectedAlgorithmSourceCode.set('Choose an operation!');
 }
 
 function createSampleTree(): void {
@@ -556,8 +556,8 @@ function createSampleTree(): void {
 	calculatePositions(root);
 	consoleLog.set([]);
 	currentStep.set(0);
-	log('Minta fa létrehozva.');
-	selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+	log('Sample tree created.');
+	selectedAlgorithmSourceCode.set('Choose an operation!');
 }
 
 function height(n: Node | undefined): number {
@@ -580,7 +580,7 @@ async function rotateLeft(x: Node): Promise<Node> {
     const y = x.right!;
     const t2 = y.left;
     
-    log(`Balra forgatás: ${x.value}`);
+    log(`Rotate left: ${x.value}`);
     
     y.left = x;
     x.right = t2;
@@ -595,7 +595,7 @@ async function rotateRight(y: Node): Promise<Node> {
     const x = y.left!;
     const t2 = x.right;
     
-    log(`Jobbra forgatás: ${y.value}`);
+    log(`Rotate right: ${y.value}`);
     
     x.right = y;
     y.left = t2;
@@ -679,15 +679,15 @@ async function balance(n: Node): Promise<Node> {
 		class="custom-input"
 		type="number"
 		bind:value={elementValue}
-		placeholder="Elem értéke"
+		placeholder="Node's value"
 		disabled={$algorithmStatus !== 'idle'}
 	/>
 	<div>
-		<button on:click={insertElement} disabled={$algorithmStatus !== 'idle'}>Elem beszúrás</button>
-		<button on:click={deleteElement} disabled={$algorithmStatus !== 'idle'}>Elem törlés</button>
-		<button on:click={searchElement} disabled={$algorithmStatus !== 'idle'}>Elem keresés</button>
-		<button on:click={createSampleTree} disabled={$algorithmStatus !== 'idle'} class="special-button">Minta fa</button>
-		<button on:click={resetTree} disabled={$algorithmStatus !== 'idle'} class="clear-button">Fa törlése</button>
+		<button on:click={insertElement} disabled={$algorithmStatus !== 'idle'}>Insert Node</button>
+		<button on:click={deleteElement} disabled={$algorithmStatus !== 'idle'}>Delete Node</button>
+		<button on:click={searchElement} disabled={$algorithmStatus !== 'idle'}>Search Node</button>
+		<button on:click={createSampleTree} disabled={$algorithmStatus !== 'idle'} class="special-button">Sample Tree</button>
+		<button on:click={resetTree} disabled={$algorithmStatus !== 'idle'} class="clear-button">Delete Tree</button>
 
 	</div>
 </div>
@@ -743,7 +743,7 @@ async function balance(n: Node): Promise<Node> {
 				</g>
 			{/each}
 		{:else}
-			<text x="250" y="150" text-anchor="middle" fill="#aaa" font-size="16"> A fa üres. </text>
+			<text x="250" y="150" text-anchor="middle" fill="#aaa" font-size="16"> The Tree is Empty </text>
 		{/if}
 	</svg>
 </div>

@@ -66,7 +66,7 @@ function fixInsert(node) {
         rotateRight(grandparent);
       }
     } else {
-      // Tükör eset
+      // Mirror case
     }
   }
   root.color = 'black';
@@ -96,7 +96,7 @@ function fixInsert(node) {
   } else if (key > node.value) {
     node.right = delete(node.right, key);
   } else {
-    // Törlés logika
+    // Deletion logic
     if (!node.left) return node.right;
     if (!node.right) return node.left;
     
@@ -140,7 +140,7 @@ function fixInsert(node) {
 
 	function validateInput() {
 		if (!elementValue) {
-			log('Kérlek adj meg egy értéket!');
+			log('Please enter a value!');
 			return false;
 		}
 		return true;
@@ -155,9 +155,9 @@ function fixInsert(node) {
 			currentStep.set(0);
 			selectedAlgorithmSourceCode.set(rbtreeInsertSource);
 			activeLine.set({ start: 0, end: 0 });
-			log(`Beszúrás: ${elementValue}`);
+			log(`Insert: ${elementValue}`);
 			await insert(Number(elementValue));
-			log(`Elem hozzáadva: ${elementValue}`);
+			log(`Element added: ${elementValue}`);
 			activeLine.set({ start: -1, end: -1 });
 			algorithmStatus.set('idle');
 			animationInProgress = false;
@@ -170,7 +170,7 @@ function fixInsert(node) {
 		const newNode = new RBNode(value);
 		if (!root) {
 			activeLine.set({ start: 3, end: 5 });
-			log(`Új gyökér: ${value}`);
+			log(`New root: ${value}`);
 			newNode.color = 'black';
 			root = newNode;
 			await calculatePositions(root);
@@ -189,11 +189,11 @@ function fixInsert(node) {
 				parent = current;
 				if (value < current.value) {
 					activeLine.set({ start: 8, end: 10 });
-					log(`Balra haladás: ${current.value}`);
+					log(`Moving left: ${current.value}`);
 					current = current.left;
 				} else {
 					activeLine.set({ start: 10, end: 12 });
-					log(`Jobbra haladás: ${current.value}`);
+					log(`Moving right: ${current.value}`);
 					current = current.right;
 				}
 			}
@@ -211,7 +211,7 @@ function fixInsert(node) {
 			}
 
 			activeLine.set({ start: 15, end: 15 });
-			await fixInsert(newNode); // <-- ide jön a balanszolás
+			await fixInsert(newNode); // <-- balancing happens here
 		}
 		
 		clearAllHighlights(root);
@@ -240,7 +240,7 @@ function fixInsert(node) {
 
 				if (uncle?.color === 'red') {
 					activeLine.set({ start: 25, end: 28 });
-					log('Eset 1: Szülő és nagybácsi is piros');
+					log('Case 1: Parent and uncle are both red');
 					if (uncle) await highlightNode(uncle, true);
 					
 					parent.color = 'black';
@@ -255,12 +255,12 @@ function fixInsert(node) {
 				} else {
 					if (node === parent.right) {
 						activeLine.set({ start: 30, end: 32 });
-						log('Eset 2: Bal-jobb eset - forgatás');
+						log('Case 2: Left-right case - rotation');
 						await rotateLeft(parent);
 						node = parent;
 					}
 					activeLine.set({ start: 33, end: 35 });
-					log('Eset 3: Bal-bal eset');
+					log('Case 3: Left-left case');
 					node.parent!.color = 'black';
 					grandparent.color = 'red';
 					await drawTreeWithAnimation();
@@ -273,7 +273,7 @@ function fixInsert(node) {
 
 				if (uncle?.color === 'red') {
 					activeLine.set({ start: 39, end: 42 });
-					log('Tükör Eset 1: Szülő és nagybácsi is piros');
+					log('Mirror Case 1: Parent and uncle are both red');
 					if (uncle) await highlightNode(uncle, true);
 					
 					parent.color = 'black';
@@ -288,12 +288,12 @@ function fixInsert(node) {
 				} else {
 					if (node === parent.left) {
 						activeLine.set({ start: 44, end: 46 });
-						log('Tükör Eset 2: Jobb-bal eset - forgatás');
+						log('Mirror Case 2: Right-left case - rotation');
 						await rotateRight(parent);
 						node = parent;
 					}
 					activeLine.set({ start: 47, end: 49 });
-					log('Tükör Eset 3: Jobb-jobb eset');
+					log('Mirror Case 3: Right-right case');
 					node.parent!.color = 'black';
 					grandparent.color = 'red';
 					await drawTreeWithAnimation();
@@ -313,7 +313,7 @@ function fixInsert(node) {
 	}
 
 	async function rotateLeft(x: RBNode) {
-		log(`Balra forgatás: ${x.value}`);
+		log(`Rotate left: ${x.value}`);
 		const y = x.right;
 		if (!y) return;
 
@@ -337,7 +337,7 @@ function fixInsert(node) {
 	}
 
 	async function rotateRight(y: RBNode) {
-		log(`Jobbra forgatás: ${y.value}`);
+		log(`Rotate right: ${y.value}`);
 		const x = y.left;
 		if (!x) return;
 
@@ -369,7 +369,7 @@ function fixInsert(node) {
 		currentStep.set(0);
 		selectedAlgorithmSourceCode.set(rbtreeDeleteSource);
 		activeLine.set({ start: 0, end: 0 });
-		log(`Törlés: ${elementValue}`);
+		log(`Delete: ${elementValue}`);
 		const value = Number(elementValue);
 		const z = await searchElement(value);
 		
@@ -388,7 +388,7 @@ function fixInsert(node) {
 		await highlightNode(z, true);
 		await delay(animationSpeed);
 		
-		log(`Csomópont törlése: ${z.value}`);
+		log(`Deleting node: ${z.value}`);
 
 		if (!z.left) {
 			activeLine.set({ start: 10, end: 11 });
@@ -402,7 +402,7 @@ function fixInsert(node) {
 			activeLine.set({ start: 15, end: 17 });
 			y = minimum(z.right);
 			await highlightNode(y, true);
-			log(`Helyettesítés utóddal: ${y.value}`);
+			log(`Replacing with successor: ${y.value}`);
 			await delay(animationSpeed);
 			
 			yOriginalColor = y.color;
@@ -425,11 +425,11 @@ function fixInsert(node) {
 
 		if (yOriginalColor === 'black') {
 			activeLine.set({ start: 19, end: 19 });
-			log('Fekete magasság javítása törlés után');
+			log('Fixing black height after deletion');
 			await fixDelete(x, z.parent ?? null);
 		}
 
-		log(`Elem törölve: ${value}`);
+		log(`Element deleted: ${value}`);
 		activeLine.set({ start: -1, end: -1 });
 		algorithmStatus.set('idle');
 		
@@ -452,7 +452,7 @@ function fixInsert(node) {
 				
 				if (w?.color === 'red') {
 					activeLine.set({ start: 20, end: 22 });
-					log('Törlés Eset 1: Testvér piros');
+					log('Delete Case 1: Sibling is red');
 					w.color = 'black';
 					parent.color = 'red';
 					await drawTreeWithAnimation();
@@ -464,7 +464,7 @@ function fixInsert(node) {
 				
 				if ((!w?.left || w.left.color === 'black') && (!w?.right || w.right.color === 'black')) {
 					activeLine.set({ start: 23, end: 25 });
-					log('Törlés Eset 2: Testvér fekete gyermekekkel');
+					log('Delete Case 2: Sibling with black children');
 					if (w) w.color = 'red';
 					await drawTreeWithAnimation();
 					if (w) await highlightNode(w, false);
@@ -473,7 +473,7 @@ function fixInsert(node) {
 				} else {
 					if (!w?.right || w.right.color === 'black') {
 						activeLine.set({ start: 26, end: 28 });
-						log('Törlés Eset 3: Testvér jobb gyermeke fekete');
+						log('Delete Case 3: Sibling right child is black');
 						if (w?.left) {
 							await highlightNode(w.left, true);
 							w.left.color = 'black';
@@ -491,7 +491,7 @@ function fixInsert(node) {
 					}
 					
 					activeLine.set({ start: 29, end: 31 });
-					log('Törlés Eset 4: Újraszerkezetzés');
+					log('Delete Case 4: Restructuring');
 					if (w) w.color = parent.color;
 					parent.color = 'black';
 					if (w?.right) {
@@ -514,7 +514,7 @@ function fixInsert(node) {
 				
 				if (w?.color === 'red') {
 					activeLine.set({ start: 20, end: 22 });
-					log('Törlés Tükör Eset 1: Testvér piros');
+					log('Delete Mirror Case 1: Sibling is red');
 					w.color = 'black';
 					if (parent) parent.color = 'red';
 					await drawTreeWithAnimation();
@@ -526,7 +526,7 @@ function fixInsert(node) {
 				
 				if ((!w?.right || w.right.color === 'black') && (!w?.left || w.left.color === 'black')) {
 					activeLine.set({ start: 23, end: 25 });
-					log('Törlés Tükör Eset 2: Testvér fekete gyermekekkel');
+					log('Delete Mirror Case 2: Sibling with black children');
 					if (w) w.color = 'red';
 					await drawTreeWithAnimation();
 					if (w) await highlightNode(w, false);
@@ -535,7 +535,7 @@ function fixInsert(node) {
 				} else {
 					if (!w?.left || w.left.color === 'black') {
 						activeLine.set({ start: 26, end: 28 });
-						log('Törlés Tükör Eset 3: Testvér bal gyermeke fekete');
+						log('Delete Mirror Case 3: Sibling left child is black');
 						if (w?.right) {
 							await highlightNode(w.right, true);
 							w.right.color = 'black';
@@ -553,7 +553,7 @@ function fixInsert(node) {
 					}
 					
 					activeLine.set({ start: 29, end: 31 });
-					log('Törlés Tükör Eset 4: Újraszerkezetzés');
+					log('Delete Mirror Case 4: Restructuring');
 					if (w) w.color = parent.color;
 					if (parent) parent.color = 'black';
 					if (w?.left) {
@@ -607,7 +607,7 @@ function fixInsert(node) {
 			currentStep.set(0);
 			selectedAlgorithmSourceCode.set(rbtreeSearchSource);
 			activeLine.set({ start: 0, end: 0 });
-			log(`Keresés: ${value}`);
+			log(`Search: ${value}`);
 		}
 		
 		let current = root;
@@ -619,7 +619,7 @@ function fixInsert(node) {
 			
 			if (value === current.value) {
 				activeLine.set({ start: 7, end: 9 });
-				log(`Érték megtalálva: ${value}`);
+				log(`Value found: ${value}`);
 				await delay(animationSpeed / 2);
 				activeLine.set({ start: -1, end: -1 });
 				algorithmStatus.set('idle');
@@ -627,19 +627,19 @@ function fixInsert(node) {
 				return current;
 			} else if (value < current.value) {
 				activeLine.set({ start: 10, end: 12 });
-				log(`Keresés balra: ${current.value}`);
+				log(`Searching left: ${current.value}`);
 				await highlightNode(current, false);
 				current = current.left;
 			} else {
 				activeLine.set({ start: 13, end: 15 });
-				log(`Keresés jobbra: ${current.value}`);
+				log(`Searching right: ${current.value}`);
 				await highlightNode(current, false);
 				current = current.right;
 			}
 		}
 		
 		activeLine.set({ start: 3, end: 5 });
-		log(`Érték nem található: ${value}`);
+		log(`Value not found: ${value}`);
 		activeLine.set({ start: -1, end: -1 });
 		algorithmStatus.set('idle');
 		animationInProgress = false;
@@ -657,7 +657,7 @@ function fixInsert(node) {
 		activeLine.set({ start: 0, end: 0 });
 		await clearTree();
 		
-		log("Példa fa létrehozása...");
+		log("Creating example tree...");
 		
 		const values = [10, 5, 15, 3, 7, 12, 20, 1, 4, 6, 8, 11, 13, 18, 25];
 		
@@ -670,10 +670,10 @@ function fixInsert(node) {
 		clearAllHighlights(root);
 		drawTree();
 		
-		log("Példa fa létrehozva!");
+		log("Example tree created!");
 		activeLine.set({ start: -1, end: -1 });
 		algorithmStatus.set('idle');
-		selectedAlgorithmSourceCode.set('Minta fa létrehozva.');
+		selectedAlgorithmSourceCode.set('Sample tree created.');
 		animationInProgress = false;
 	}
 	
@@ -683,8 +683,8 @@ function fixInsert(node) {
 		root = null;
 		consoleLog.set([]);
 		activeLine.set({ start: -1, end: -1 });
-		selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
-		log("Fa törölve!");
+		selectedAlgorithmSourceCode.set('Choose an operation!');
+		log("Tree deleted!");
 		drawTree();
 	}
 	
@@ -915,21 +915,21 @@ function fixInsert(node) {
 	}
 	
 	// ==== Forráskód megjelenítés ====
-	selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+	selectedAlgorithmSourceCode.set('Choose an operation!');
 </script>
 
 <div class="control-buttons">
-	<input class="custom-input" type="number" bind:value={elementValue} placeholder="Elem értéke" />
+	<input class="custom-input" type="number" bind:value={elementValue} placeholder="Node's value" />
 	<div>
-		<button on:click={insertElement}>Elem beszúrás</button>
-		<button on:click={deleteElement}>Elem törlés</button>
+		<button on:click={insertElement}>Insert Node</button>
+		<button on:click={deleteElement}>Delete Node</button>
 		<button on:click={async () => {
 			if (validateInput() && !animationInProgress) {
 				await searchElement(Number(elementValue));
 			}
-		}}>Elem keresés</button>
-		<button on:click={createExampleTree} class="special-button">Példa fa</button>
-		<button on:click={clearTree} class="clear-button">Fa törlése</button>
+		}}>Search Node</button>
+		<button on:click={createExampleTree} class="special-button">Sample Tree</button>
+		<button on:click={clearTree} class="clear-button">Delete Tree</button>
 	</div>
 </div>
 

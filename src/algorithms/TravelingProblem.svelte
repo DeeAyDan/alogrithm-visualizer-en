@@ -104,7 +104,7 @@
 			}
 		}
 
-		// visszatérés a kezdőpontra
+		// return to starting point
 		return steps + 1;
 	}
 
@@ -127,7 +127,7 @@
 	async function startAlgorithm(event) {
 		consoleLog.set([]);
 		currentStep.set(0);
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		if (elementValue < 3) {
 			elementValue = 3;
@@ -139,7 +139,7 @@
 		await tspGreedy(cities);
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -165,7 +165,7 @@
 					checkingEdge = { from: current, to: i };
 					currentCityIndex = current;
 					nextCityIndex = i;
-					log(`Távolság ellenőrzés: ${current} → ${i}`);
+					log(`Checking distance: ${current} → ${i}`);
 					activeLine.set({ start: 15, end: 21 });
 					await delay(900 - get(speed) * 8);
 					await pauseIfNeeded();
@@ -184,7 +184,7 @@
 
 			if (nearest !== null) {
 				activeLine.set({ start: 25, end: 31 });
-				log(`Lépés: ${current} → ${nearest}, távolság: ${minDist.toFixed(2)}`);
+				log(`Step: ${current} → ${nearest}, distance: ${minDist.toFixed(2)}`);
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
 				checkingEdge = null;
@@ -203,7 +203,7 @@
 		currentCityIndex = current;
 		nextCityIndex = tspPath[0];
 		log(
-			`Visszatérés: ${current} → ${tspPath[0]}, távolság: ${euclideanDistance(cities[current], cities[0]).toFixed(2)}`
+			`Return: ${current} → ${tspPath[0]}, distance: ${euclideanDistance(cities[current], cities[0]).toFixed(2)}`
 		);
 		activeLine.set({ start: -1, end: -1 });
 		await pauseIfNeeded();
@@ -218,7 +218,7 @@
 
 		consoleLog.update((logs) => [
 			...logs,
-			'Össztáv: ' + weight.reduce((a, b) => parseFloat(a) + parseFloat(b), 0).toFixed(2)
+			'Total distance: ' + weight.reduce((a, b) => parseFloat(a) + parseFloat(b), 0).toFixed(2)
 		]);
 
 		currentCityIndex = null;
@@ -268,7 +268,7 @@
 </script>
 
 <div class="control-buttons">
-	<div>Városok száma:</div>
+	<div>Number of cities:</div>
 	<input
 		class="custom-input"
 		type="number"
@@ -276,7 +276,7 @@
 		min="3"
 		max="20"
 		bind:value={elementValue}
-		placeholder="Pontok száma"
+		placeholder="Number of points"
 	/>
 </div>
 

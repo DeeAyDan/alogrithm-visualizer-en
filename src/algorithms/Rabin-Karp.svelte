@@ -52,7 +52,7 @@
 
 		for (let i = 0; i < M - 1; i++) h = (h * d) % q;
 
-		// kezdő hash-ek kiszámítása
+		// calculate initial hashes
 		for (let i = 0; i < M; i++) {
 			p = (d * p + pattern.charCodeAt(i)) % q;
 			t = (d * t + text.charCodeAt(i)) % q;
@@ -80,7 +80,7 @@
 				}
 			}
 
-			// Következő ablak hash-értékének frissítése
+			// Update hash value for next window
 			if (i < N - M) {
 				t = (d * (t - text.charCodeAt(i) * h) + text.charCodeAt(i + M)) % q;
 				if (t < 0) t += q;
@@ -118,31 +118,31 @@
 		currentStep.set(0);
 
 		if (text.length === 0) {
-			consoleLog.update((logs) => [...logs, `Szöveg üres.`]);
+			consoleLog.update((logs) => [...logs, `Text is empty.`]);
 			algorithmStatus.set('idle');
 			return;
 		} else if (pattern.length === 0) {
-			consoleLog.update((logs) => [...logs, `Minta üres.`]);
+			consoleLog.update((logs) => [...logs, `Pattern is empty.`]);
 			algorithmStatus.set('idle');
 			return;
 		} else if (text.length > 15) {
-			consoleLog.update((logs) => [...logs, 'Túl hosszú szöveg!']);
+			consoleLog.update((logs) => [...logs, 'Text too long!']);
 			algorithmStatus.set('idle');
 			return;
 		} else if (pattern.length > 5) {
-			consoleLog.update((logs) => [...logs, 'Túl hosszú minta!']);
+			consoleLog.update((logs) => [...logs, 'Pattern too long!']);
 			algorithmStatus.set('idle');
 			return;
 		}
 
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		totalSteps.set(rabinKarpCounter(text, pattern));
 		await rabinKarp(text, pattern);
 		textIndex = null;
 		activeLine.set({start: -1, end: -1});
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -171,13 +171,13 @@
 		for (let i = 0; i <= N - M; i++) {
 			patternPosition = i;
 			textIndex = null;
-			log(`Hash összehasonlítás: minta=${p}, szöveg=${t}`);
+			log(`Hash comparison: pattern=${p}, text=${t}`);
 			activeLine.set({start: 20, end: 20});
 			await delay(900 - get(speed) * 8);
 			await pauseIfNeeded();
 
 			if (p === t) {
-				log(`Hash egyezik, karakter-összehasonlítás...`);
+				log(`Hash matches, comparing characters...`);
 				activeLine.set({start: 21, end: 22});
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
@@ -185,19 +185,19 @@
 				let match = true;
 				for (let j = 0; j < M; j++) {
 					if (text[i + j] !== pattern[j]) {
-						log(`Eltérés '${text[i + j]}' ≠ '${pattern[j]}'`);
+						log(`Mismatch '${text[i + j]}' ≠ '${pattern[j]}'`);
 						activeLine.set({start: 25, end: 28});
 						match = false;
 						break;
 					}
-					log(`Egyezés '${text[i + j]}' = '${pattern[j]}'`);
+					log(`Match '${text[i + j]}' = '${pattern[j]}'`);
 					activeLine.set({start: 32, end: 35});
 					textIndex = i + j;
 					await delay(900 - get(speed) * 8);
 					await pauseIfNeeded();
 				}
 				if (match) {
-					log(`Minta találat a(z) ${i}. pozíción!`);
+					log(`Pattern found at position ${i}!`);
 					for (let k = 0; k < M; k++) matchPositions.add(i + k);
 					matchPositions = new Set<number>([...matchPositions]);
 				}
@@ -213,9 +213,9 @@
 	// ==== Forráskód megjelenítés ====
 	selectedAlgorithmSourceCode.set(
 		`function rabinKarp(text, pattern) {
-  // karakterkészlet mérete
+  // character set size
   const d = 256;
-  // prímszám a mod művelethez
+  // prime number for mod operation
   const q = 101;
  
   let M = pattern.length;
@@ -258,11 +258,11 @@
 
 <div class="custom-input">
 	<div>
-		<span>Szöveg:</span>
+		<span>Text:</span>
 		<input class="text-input" bind:value={text} maxlength="15" disabled={$algorithmStatus !== 'idle'} />
 	</div>
 	<div>
-		<span>Mintázat:</span>
+		<span>Pattern:</span>
 		<input class="pattern-input" bind:value={pattern} maxlength="5" disabled={$algorithmStatus !== 'idle'} />
 	</div>
 </div>

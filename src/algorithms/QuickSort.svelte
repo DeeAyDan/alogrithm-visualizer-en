@@ -37,7 +37,7 @@
   resetParameters();
   totalSteps.set(countQuickSortSteps());
   consoleLog.set([]);
-  consoleLog.update((logs) => [...logs, 'Adatok újrakeverve, algoritmus visszaállítva.']);
+  consoleLog.update((logs) => [...logs, 'Data reshuffled, algorithm reset.']);
 }
 
 	// ==== Alapadatok ====
@@ -121,12 +121,12 @@
 	async function startAlgorithm(event) {
 		consoleLog.set([]);
 		currentStep.set(0);
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		await quickSort(data, 0, data.length - 1);
 		activeLine.set({start: -1, end: -1});
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -141,21 +141,21 @@
 	async function partition(arr: number[], left: number, right: number): Promise<number> {
 		let pivot = arr[right];
 		pivotIndex = right;
-		log(`Pivot kiválasztva: ${pivot}`);
+		log(`Pivot selected: ${pivot}`);
 		activeLine.set({start: 2, end: 2});
 		await delay(900 - get(speed) * 8);
 		await pauseIfNeeded();
 		let i = left - 1;
 		for (let j = left; j < right; j++) {
 			activeIndex = j;
-			log(`Összehasonlítás: ${arr[j]} <= ${pivot}`);
+			log(`Comparison: ${arr[j]} <= ${pivot}`);
 			activeLine.set({start: 15, end: 16});
 			await delay(900 - get(speed) * 8);
 			await pauseIfNeeded();
 			if (arr[j] <= pivot) {
 				i++;
 				[arr[i], arr[j]] = [arr[j], arr[i]];
-				log(`Csere: ${arr[i]} <-> ${arr[j]}`);
+				log(`Swap: ${arr[i]} <-> ${arr[j]}`);
 				activeLine.set({start: 17, end: 20});
 				data = [...arr];
 				await delay(900 - get(speed) * 8);
@@ -164,7 +164,7 @@
 		}
 		[arr[i + 1], arr[right]] = [arr[right], arr[i + 1]];
 		swapIndices = [i + 1, right];
-		log(`Pivot helyre rakása: ${arr[i + 1]} <-> ${arr[right]}`);
+		log(`Placing pivot: ${arr[i + 1]} <-> ${arr[right]}`);
 		activeLine.set({start: 23, end: 25});
 		data = [...arr];
 		await delay(900 - get(speed) * 8);
@@ -205,7 +205,7 @@ function partition(arr, left, right){
 </script>
 
 <div class="custom-buttons button-group">
-	<button disabled={$algorithmStatus !== 'idle'} on:click={reshuffleData}>Keverés</button>
+	<button disabled={$algorithmStatus !== 'idle'} on:click={reshuffleData}>Shuffle</button>
 </div>
 
 <!-- ==== Komponens markup ==== -->

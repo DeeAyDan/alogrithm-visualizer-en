@@ -46,7 +46,7 @@
 		edges = edges.map(({ from, to }) => ({
 			from,
 			to,
-			weight: Math.floor(Math.random() * 20) + 1 // 1–20 közötti súly
+			weight: Math.floor(Math.random() * 20) + 1 // weight between 1–20
 		}));
 	}
 
@@ -123,13 +123,13 @@
 		consoleLog.set([]);
 		currentStep.set(0);
 		mstEdges = [];
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		await prim(0);
 		activeLine.set({ start: -1, end: -1 });
 
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -169,7 +169,7 @@
 				const { from, to, weight } = edgeQueue[i];
 
 				highlightedEdge = { from, to };
-				log(`Él vizsgálata: (${from}, ${to}) súly: ${weight}`);
+				log(`Checking edge: (${from}, ${to}) weight: ${weight}`);
 				activeLine.set({ start: 9, end: 9 });
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
@@ -177,7 +177,7 @@
 				if ((visited[from] && !visited[to]) || (visited[to] && !visited[from])) {
 					result.push(edgeQueue[i]);
 					mstEdges = [...result];
-					log(`Hozzáadás az feszítőfához: (${from}, ${to})`);
+					log(`Adding to spanning tree: (${from}, ${to})`);
 					activeLine.set({ start: 11, end: 16 });
 
 					visited[from] = true;
@@ -203,7 +203,7 @@
 
 <div class="graph-container">
 	<svg class="svg" width="500" height="300">
-		<!-- Élek -->
+		<!-- Edges -->
 		{#each edges as { from, to, weight }}
 			<line
 				x1={nodes[from].x}
@@ -229,7 +229,7 @@
 				fill="aliceblue">{weight}</text
 			>
 		{/each}
-		<!-- Csúcsok -->
+		<!-- Vertices -->
 		{#each nodes as { id, x, y }}
 			<circle cx={x} cy={y} r="20" fill="#2f4f4f" stroke="aliceblue" stroke-width="2" />
 			<text {x} y={y + 5} text-anchor="middle" fill="aliceblue" font-size="12">{id}</text>

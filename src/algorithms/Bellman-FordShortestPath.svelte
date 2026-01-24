@@ -117,12 +117,12 @@
 		consoleLog.set([]);
 		currentStep.set(0);
 		algorithmStatus.set('running');
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		await bellmanFord(source);
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -136,7 +136,7 @@
 			for (const { from, to, weight } of edges) {
 				activeLine.set({ start: 7, end: 8 });
 				highlightedEdge = { from, to };
-				log(`Ellenőrzés: ${from} → ${to}, távolság: ${distances[from] + weight} < ${distances[to]}`);
+				log(`Checking: ${from} → ${to}, distance: ${distances[from] + weight} < ${distances[to]}`);
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
 
@@ -145,7 +145,7 @@
 					pathEdges.push(highlightedEdge);
 					predecessor[to] = from;
 					activeLine.set({ start: 9, end: 12 });
-					log(`Távolság frissítése: ${from} → ${to}, új távolság: ${distances[to]}`);
+					log(`Updating distance: ${from} → ${to}, new distance: ${distances[to]}`);
 					await delay(900 - get(speed) * 8);
 					await pauseIfNeeded();
 				}
@@ -163,7 +163,7 @@
 			if (distances[from] + weight < distances[to]) {
 				highlightedEdge = { from, to };
 				activeLine.set({ start: 17, end: 22 });
-				log(`Negatív ciklus: ${from} → ${to}, új távolság: ${distances[to]}`);
+				log(`Negative cycle: ${from} → ${to}, new distance: ${distances[to]}`);
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
 				needToBreak = true;
@@ -179,7 +179,7 @@
   const predecessor = Array(nodes.length).fill(null);
   distances[start] = 0;
 
-  // Relaxáció
+  // Relaxation
   for (let i = 0; i < nodes.length - 1; i++) {
     for (const { from, to, weight } of edges) {
       if (distances[from] + weight < distances[to]) {
@@ -189,10 +189,10 @@
     }
   }
 
-  // Negatív ciklus ellenőrzése
+  // Negative cycle check
   for (const { from, to, weight } of edges) {
     if (distances[from] + weight < distances[to]) {
-      // Negatív ciklus találva
+      // Negative cycle found
       return false;
     }
   }
@@ -267,7 +267,7 @@
 			</text>
 		{/each}
 
-		<!-- Csúcsok -->
+		<!-- Nodes -->
 		{#each nodes as { id, x, y }}
 			<circle cx={x} cy={y} r="20" fill="#2f4f4f" stroke="aliceblue" stroke-width="2" />
 			<text {x} y={y + 5} text-anchor="middle" fill="aliceblue" font-size="12">

@@ -110,13 +110,13 @@
 
 	async function startAlgorithm() {
 		
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		totalSteps.set(convexHullCounter(points));
 		await convexHull(points);
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -135,7 +135,7 @@
 				let b = points[j];
 
 				highlightedEdge = [a, b];
-				log(`Vizsgálat: él (${a.x}, ${a.y}) → (${b.x}, ${b.y})`);
+				log(`Checking: edge (${a.x}, ${a.y}) → (${b.x}, ${b.y})`);
 				activeLine.set({ start: 7, end: 8 });
 
 				await delay(900 - get(speed) * 8);
@@ -176,7 +176,7 @@
 					activeLine.set({ start: 29, end: 31 });
 					await delay(900 - get(speed) * 8);
 					await pauseIfNeeded();
-					log(`Él hozzáadva a konvex burokhoz`);
+					log(`Edge added to convex hull`);
 					hullEdges.push([a, b]);
 					hullEdges = [...hullEdges];
 				}
@@ -226,7 +226,7 @@
 </script>
 
 <div class="custom-input">
-	<div>Pontok száma:</div>
+	<div>Number of points:</div>
 	<input
 		class="custom-input"
 		type="number"

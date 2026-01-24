@@ -91,13 +91,13 @@
 		initializeTowers();
 		consoleLog.update((logs) => [
 			...logs,
-			`${displayName} algoritmus indítása ${numDisks} koronggal...`
+			`Starting ${displayName} algorithm with ${numDisks} disks...`
 		]);
 
 		await hanoi(numDisks, 0, 2, 1);
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás sikeresen befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has successfully finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -139,7 +139,7 @@
 			await pauseIfNeeded();
 
 			towers[to].push(disk);
-			log(`Lépés: ${disk} korong ${TOWER_NAMES[from]} → ${TOWER_NAMES[to]}`);
+			log(`Step: ${disk} disk ${TOWER_NAMES[from]} → ${TOWER_NAMES[to]}`);
 			animationInProgress = false;
 			movingDisk = null;
 
@@ -190,7 +190,7 @@ function moveDisk(from, to) {
 
 <!-- ===== Input Controls ===== -->
 <div class="custom-input">
-	<label for="inputNumber">Korongok száma:</label>
+	<label for="inputNumber">Number of disks:</label>
 	<input
 		id="inputNumber"
 		type="number"
@@ -242,7 +242,7 @@ function moveDisk(from, to) {
 	</div>
 	<div class="tower-labels">
 		{#each TOWER_NAMES as name, index}
-			<div class="tower-label">{name} torony</div>
+			<div class="tower-label">{name} tower</div>
 		{/each}
 	</div>
 </div>

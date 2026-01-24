@@ -133,12 +133,12 @@
 	async function startAlgorithm() {
 		consoleLog.set([]);
 		currentStep.set(0);
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		await dijkstra(0);
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -167,7 +167,7 @@
 			visited[current] = true;
 
 			activeLine.set({ start: 14, end: 15 });
-			log(`Aktív csúcs: ${current} (távolság: ${distances[current]})`);
+			log(`Active vertex: ${current} (distance: ${distances[current]})`);
 			await delay(900 - get(speed) * 8);
 			await pauseIfNeeded();
 
@@ -182,7 +182,7 @@
 					activeLine.set({ start: 28, end: 30 });
 				} else continue;
 
-				log(`Csúcs kiválasztva: ${neighbor}`);
+				log(`Vertex selected: ${neighbor}`);
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
 
@@ -192,7 +192,7 @@
 				highlightedEdge = { from: current, to: neighbor };
 
 				activeLine.set({ start: 35, end: 35 });
-				log(`Távolságok összehasonlítása: ${newDist} < ${distances[neighbor]}`);
+				log(`Comparing distances: ${newDist} < ${distances[neighbor]}`);
 				await delay(900 - get(speed) * 8);
 				await pauseIfNeeded();
 
@@ -207,7 +207,7 @@
 					}
 
 					activeLine.set({ start: 37, end: 40 });
-					log(`Távolság frissítve: ${current} → ${neighbor}, új érték: ${newDist}`);
+					log(`Distance updated: ${current} → ${neighbor}, new value: ${newDist}`);
 					await delay(900 - get(speed) * 8);
 					await pauseIfNeeded();
 				}
@@ -263,7 +263,7 @@
 <Controls {currentStep} {totalSteps} on:start={startAlgorithm} />
 <div class="graph-container">
 	<svg class="svg" width="500" height="300">
-		<!-- Élek -->
+		<!-- Edges -->
 		{#each edges as { from, to, weight }}
 			<line
 				x1={nodes[from].x}
@@ -290,7 +290,7 @@
 				fill="aliceblue">{weight}</text
 			>
 		{/each}
-		<!-- Csúcsok -->
+		<!-- Vertices -->
 		{#each nodes as { id, x, y }}
 			<circle cx={x} cy={y} r="20" fill="#2f4f4f" stroke="aliceblue" stroke-width="2" />
 			<text {x} y={y + 5} text-anchor="middle" fill="aliceblue" font-size="12">{id}</text>

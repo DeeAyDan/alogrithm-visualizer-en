@@ -70,11 +70,11 @@
 		currentResult = null;
 		recursionTree = [];
 
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		totalSteps.set(calculateTotalSteps(inputNumber));
 		let result = await recursiveFactorial(inputNumber);
-		consoleLog.update((logs) => [...logs, `Végeredmény: ${inputNumber}! = ${result}`]);
+		consoleLog.update((logs) => [...logs, `Final result: ${inputNumber}! = ${result}`]);
 
 		activeLine.set({ start: -1, end: -1 });
 		algorithmStatus.set('finished');
@@ -89,13 +89,13 @@
 		recursionTree = [...recursionTree, treeNode];
 
 		activeLine.set({ start: 1, end: 1 });
-		await log(`Belépés: factorial(${n})`);
+		await log(`Entering: factorial(${n})`);
 		await delay(900 - get(speed) * 8);
 		await pauseIfNeeded();
 
 		if (n === 0 || n === 1) {
 			activeLine.set({ start: 2, end: 4 });
-			await log(`Alapeset: ${n}! = 1`);
+			await log(`Base case: ${n}! = 1`);
 
 			treeNode.result = 1;
 			treeNode.state = 'completed';
@@ -110,7 +110,7 @@
 		}
 
 		activeLine.set({ start: 5, end: 5 });
-		await log(`Rekurzív hívás: factorial(${n - 1})`);
+		await log(`Recursive call: factorial(${n - 1})`);
 		await delay(900 - get(speed) * 8);
 		await pauseIfNeeded();
 
@@ -131,7 +131,7 @@
 		recursionTree = [...recursionTree];
 
 		activeLine.set({ start: 5, end: 5 });
-		await log(`Visszatérés: ${n}! = ${n} * ${partial} = ${result}`);
+		await log(`Return: ${n}! = ${n} * ${partial} = ${result}`);
 		await delay(900 - get(speed) * 8);
 		await pauseIfNeeded();
 		callStack = callStack.slice(0, -1);
@@ -150,14 +150,14 @@
 </script>
 
 <div class="custom-input">
-	<label for="inputNumber">Szám (n):</label>
+	<label for="inputNumber">Number (n):</label>
 	<input
 		id="inputNumber"
 		type="number"
 		bind:value={inputNumber}
 		min="0"
 		max="12"
-		placeholder="Adj meg egy számot"
+		placeholder="Enter a number"
 		disabled={$algorithmStatus !== 'idle'}
 	/>
 </div>
@@ -167,7 +167,7 @@
 
 	<div class="visualization-container">
 		<div class="visualization-section">
-			<h3>Hívási verem</h3>
+			<h3>Call Stack</h3>
 			<div class="call-stack scrollable">
 				{#each callStack as call}
 					<div class="call-item">
@@ -175,22 +175,22 @@
 					</div>
 				{/each}
 				{#if callStack.length === 0}
-					<div class="empty-stack">A verem üres</div>
+					<div class="empty-stack">The stack is empty</div>
 				{/if}
 			</div>
 		</div>
 
 		<div class="visualization-section" style="height: 110px;">
-			<h3>Jelenlegi eredmény</h3>
+			<h3>Current Result</h3>
 			{#if currentResult !== null}
 				<div class="current-result">{currentResult}</div>
 			{:else}
-				<div class="empty-result">Nincs eredmény</div>
+				<div class="empty-result">No result</div>
 			{/if}
 		</div>
 
 		<div class="visualization-section">
-			<h3>Rekurziós fa</h3>
+			<h3>Recursion Tree</h3>
 			<div class="recursion-tree scrollable">
 				{#each recursionTree.filter((node) => node.state === 'completed') as node}
 					<div class="tree-node {node.state}">
@@ -206,7 +206,7 @@
 					</div>
 				{/each}
 				{#if recursionTree.filter((node) => node.state === 'completed').length === 0}
-					<div class="empty-tree">A fa üres</div>
+					<div class="empty-tree">The tree is empty</div>
 				{/if}
 			</div>
 		</div>

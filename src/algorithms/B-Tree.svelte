@@ -75,7 +75,7 @@ const shortDelay = () => Math.max(280, 650 - get(speed) * 5);
 
 	let root = null;
 	let animating = false;
-	selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+	selectedAlgorithmSourceCode.set('Choose an operation!');
 
 	const btreeInsertSource = `function insert(node, key) {
   
@@ -140,7 +140,7 @@ function insertNonFull(node, key) {
       node.keys.splice(idx, 1);
     }
     else {
-      // Sikeres törlés
+      // Successful deletion
     }
   }
   else {
@@ -159,7 +159,7 @@ function insertNonFull(node, key) {
 		animationPath = [];
 		splitAnimation = null;
 		insertKeyHighlight = null;
-		selectedAlgorithmSourceCode.set('Válassz egy műveletet!');
+		selectedAlgorithmSourceCode.set('Choose an operation!');
 	}
 
 	async function createSampleTree() {
@@ -180,12 +180,12 @@ function insertNonFull(node, key) {
 			}
 			const sortedElements = Array.from(elements).sort((a, b) => a - b);
 			
-		log('Minta fa generálása...');
+		log('Generating sample tree...');
 		await delay(longDelay());
 		await pauseIfNeeded(activeRunId);
 			
 			for (const element of sortedElements) {
-				log(`Beszúrás: ${element}`);
+				log(`Insert: ${element}`);
 				if (!root) {
 					root = createNode();
 					root.keys = [element];
@@ -199,13 +199,13 @@ function insertNonFull(node, key) {
 				await pauseIfNeeded(activeRunId);
 			}
 			
-			log('Minta fa létrehozva.');
+			log('Sample tree created.');
 			highlightedNode = null;
 			highlightedKeys = [];
 			algorithmStatus.set('finished');
 			animationInProgress = false;
 			algorithmStatus.set('idle');
-			selectedAlgorithmSourceCode.set('Minta B-fa létrehozva.');
+			selectedAlgorithmSourceCode.set('Sample B-tree created.');
 		});
 	}
 
@@ -279,15 +279,15 @@ function insertNonFull(node, key) {
 
 	function validateInput(): boolean {
 		if (elementValue === undefined || elementValue === null) {
-			log('Kérlek adj meg egy értéket!');
+			log('Please enter a value!');
 			return false;
 		}
 		if (typeof elementValue !== 'number') {
-			log('Kérlek számot adj meg!');
+			log('Please enter a number!');
 			return false;
 		}
 		if (elementValue < 0 || elementValue > 100) {
-			log('0 és 100 közötti szám legyen!');
+			log('Please enter a number between 0 and 100!');
 			return false;
 		}
 		return true;
@@ -297,7 +297,7 @@ function insertNonFull(node, key) {
 		if (!validateInput() || animationInProgress) return;
 		await withRunGuard(async () => {
 			animationInProgress = true;
-		log(`Beszúrás: ${elementValue}`);
+		log(`Insert: ${elementValue}`);
 			algorithmStatus.set('running');
 			consoleLog.set([]);
 			currentStep.set(0);
@@ -341,7 +341,7 @@ function insertNonFull(node, key) {
 		selectedAlgorithmSourceCode.set(btreeInsertSource);
 		activeLine.set({ start: 3, end: 3 });
 		if (node.keys.length === maxElements) {
-			log(`A gyökér tele van, felosztás történik`);
+			log(`Root is full, splitting occurs`);
 			highlightedNode = node;
 			await delay(longDelay());
 			await pauseIfNeeded(activeRunId);
@@ -372,12 +372,12 @@ function insertNonFull(node, key) {
 			lastOperation = 'search';
 			selectedAlgorithmSourceCode.set(btreeSearchSource);
 			activeLine.set({ start: 0, end: 0 });
-			log(`Keresés indítása: ${elementValue}`);
+			log(`Starting search: ${elementValue}`);
 
 			animationPath = [];
 			highlightedKeys = [];
 			await bTreeSearch(root, elementValue);
-			log('Keresés vége!');
+			log('Search complete!');
 
 			setTimeout(() => {
 				highlightedNode = null;
@@ -400,7 +400,7 @@ function insertNonFull(node, key) {
 		animationPath.push(node);
 		await updateTreeLayout();
 		highlightedNode = node;
-		log(`Vizsgált csomópont: ${node.keys.join(', ')}`);
+		log(`Examined node: ${node.keys.join(', ')}`);
 		await delay(longDelay());
 		await pauseIfNeeded(activeRunId);
 		let i = 0;
@@ -413,18 +413,18 @@ function insertNonFull(node, key) {
 		if (i < node.keys.length && value === node.keys[i]) {
 			activeLine.set({ start: 6, end: 8 });
 			highlightedKeys = [{node: node, keyIndex: i}];
-			log(`Érték megtalálva: ${value}`);
+			log(`Value found: ${value}`);
 			await delay(longDelay());
 			return true;
 		}
 		if (node.isLeaf) {
 			activeLine.set({ start: 9, end: 11 });
-			log(`Nem találtuk meg a ${value} értéket - levélszint.`);
+			log(`Value ${value} not found - leaf level.`);
 			await delay(longDelay());
 			return false;
 		}
 		activeLine.set({ start: 12, end: 12 });
-		log(`Tovább a(z) ${i}. gyerekbe...`);
+		log(`Moving to child ${i}...`);
 		await delay(midDelay());
 		return await bTreeSearch(node.children[i], value);
 	}
@@ -432,13 +432,13 @@ function insertNonFull(node, key) {
 	async function insertNonFull(node, key) {
 		selectedAlgorithmSourceCode.set(btreeInsertSource);
 		activeLine.set({ start: 16, end: 16 });
-		log(`Beszúrás csomópontba: [${node.keys.join(', ')}]`);
+		log(`Inserting into node: [${node.keys.join(', ')}]`);
 		await delay(longDelay());
 		await pauseIfNeeded(activeRunId);
 		let i = node.keys.length - 1;
 		if (node.isLeaf) {
 			activeLine.set({ start: 17, end: 18 });
-			log(`Levél csomópontba szúrunk be`);
+			log(`Inserting into leaf node`);
 			node.keys.push(0);
 			await updateTreeLayout();
 			while (i >= 0 && key < node.keys[i]) {
@@ -483,7 +483,7 @@ function insertNonFull(node, key) {
 			fullChild: {...fullChild}
 		};
 		
-		log(`Csomópont felosztása: [${fullChild.keys.join(', ')}]`);
+		log(`Splitting node: [${fullChild.keys.join(', ')}]`);
 		
 		highlightedNode = fullChild;
 		highlightedKeys = [];
@@ -614,14 +614,14 @@ function insertNonFull(node, key) {
 		maxElements = +e.target.value;
 		resetTree();
 		consoleLog.set([]);
-		log(`B-fa maximális elemszáma megváltoztatva: ${maxElements}. Új fa létrehozva.`);
+		log(`B-tree maximum elements changed to: ${maxElements}. New tree created.`);
 	}
 
 	async function deleteElement() {
 		if (!validateInput() || animationInProgress) return;
 		await withRunGuard(async () => {
 			animationInProgress = true;
-			log(`Törlés: ${elementValue}`);
+			log(`Delete: ${elementValue}`);
 			algorithmStatus.set('running');
 			consoleLog.set([]);
 			currentStep.set(0);
@@ -629,7 +629,7 @@ function insertNonFull(node, key) {
 			selectedAlgorithmSourceCode.set(btreeDeleteSource);
 			activeLine.set({ start: 1, end: 1 });
 			if (!root) {
-				log('A fa üres.');
+				log('The tree is empty.');
 				animationInProgress = false;
 				algorithmStatus.set('idle');
 				activeLine.set({ start: -1, end: -1 });
@@ -637,7 +637,7 @@ function insertNonFull(node, key) {
 			}
 			await bTreeDelete(root, elementValue);
 			await updateTreeLayout();
-			log('Törlés vége!');
+			log('Delete complete!');
 			setTimeout(() => {
 				highlightedNode = null;
 				highlightedKeys = [];
@@ -664,7 +664,7 @@ function insertNonFull(node, key) {
 		}
 		if (idx < node.keys.length && node.keys[idx] === key) {
 			if (node.isLeaf) {
-				log(`Kulcs törlése levélből: ${key}`);
+				log(`Deleting key from leaf: ${key}`);
 				highlightedNode = node;
 				highlightedKeys = [{node, keyIndex: idx}];
 				await delay(longDelay());
@@ -672,7 +672,7 @@ function insertNonFull(node, key) {
 				await updateTreeLayout();
 				return;
 			} else {
-				log(`Kulcs törlése belső csomópontból: ${key}`);
+				log(`Deleting key from internal node: ${key}`);
 				highlightedNode = node;
 				highlightedKeys = [{node, keyIndex: idx}];
 				await delay(longDelay());
@@ -685,7 +685,7 @@ function insertNonFull(node, key) {
 						pred = pred.children[pred.keys.length];
 					}
 					const predKey = pred.keys[pred.keys.length - 1];
-					log(`Előd kulcs cseréje: ${predKey}`);
+					log(`Replacing with predecessor key: ${predKey}`);
 					node.keys[idx] = predKey;
 					await bTreeDelete(node.children[idx], predKey);
 				} else if (node.children[idx + 1].keys.length >= Math.ceil(maxElements / 2)) {
@@ -697,11 +697,11 @@ function insertNonFull(node, key) {
 						succ = succ.children[0];
 					}
 					const succKey = succ.keys[0];
-					log(`Utód kulcs cseréje: ${succKey}`);
+					log(`Replacing with successor key: ${succKey}`);
 					node.keys[idx] = succKey;
 					await bTreeDelete(node.children[idx + 1], succKey);
 				} else {
-					log('Összefésülés szükséges');
+					log('Merge required');
 					await mergeChildren(node, idx);
 					await bTreeDelete(node.children[idx], key);
 				}
@@ -710,11 +710,11 @@ function insertNonFull(node, key) {
 			}
 		}
 		if (node.isLeaf) {
-			log('Kulcs nem található a fában.');
+			log('Key not found in tree.');
 			await delay(longDelay());
 			return;
 		}
-		log(`Tovább a(z) ${idx}. gyerekbe...`);
+		log(`Moving to child ${idx}...`);
 		let child = node.children[idx];
 		if (child.keys.length < Math.ceil(maxElements / 2)) {
 			await fixChild(node, idx);
@@ -727,7 +727,7 @@ function insertNonFull(node, key) {
 	async function mergeChildren(node, idx) {
 		const child = node.children[idx];
 		const sibling = node.children[idx + 1];
-		log(`Összefésülés: ${child.keys.join(', ')} + ${node.keys[idx]} + ${sibling.keys.join(', ')}`);
+		log(`Merging: ${child.keys.join(', ')} + ${node.keys[idx]} + ${sibling.keys.join(', ')}`);
 		
 		child.keys.push(node.keys[idx], ...sibling.keys);
 		if (!child.isLeaf) child.children.push(...sibling.children);
@@ -743,7 +743,7 @@ function insertNonFull(node, key) {
 		
 		if (idx > 0 && node.children[idx - 1].keys.length >= minKeys) {
 			const left = node.children[idx - 1];
-			log('Kölcsönzés balról');
+			log('Borrowing from left');
 			
 			child.keys.unshift(node.keys[idx - 1]);
 			node.keys[idx - 1] = left.keys.pop();
@@ -752,7 +752,7 @@ function insertNonFull(node, key) {
 			await updateTreeLayout();
 		} else if (idx < node.children.length - 1 && node.children[idx + 1].keys.length >= minKeys) {
 			const right = node.children[idx + 1];
-			log('Kölcsönzés jobbról');
+			log('Borrowing from right');
 			
 			child.keys.push(node.keys[idx]);
 			node.keys[idx] = right.keys.shift();
@@ -760,7 +760,7 @@ function insertNonFull(node, key) {
 			
 			await updateTreeLayout();
 		} else {
-			log('Összefésülés szükséges');
+			log('Merge required');
 			
 			if (idx < node.children.length - 1) {
 				await mergeChildren(node, idx);
@@ -777,11 +777,11 @@ function insertNonFull(node, key) {
 			class="custom-input"
 			type="number"
 			bind:value={elementValue}
-			placeholder="Elem értéke"
+			placeholder="Node's value"
 			disabled={$algorithmStatus !== 'idle'}
 		/>
 		<div class="degree-container">
-			<label for="max-elements-select">Max elem:</label>
+			<label for="max-elements-select">Max Width:</label>
 			<select
 				id="max-elements-select"
 				value={maxElements}
@@ -795,11 +795,11 @@ function insertNonFull(node, key) {
 			</select>
 		</div>
 		<div>
-			<button on:click={insertElement} disabled={$algorithmStatus !== 'idle'}>Elem beszúrás</button>
-			<button on:click={searchElement} disabled={$algorithmStatus !== 'idle'}>Elem keresés</button>
-			<button on:click={deleteElement} disabled={$algorithmStatus !== 'idle'}>Elem törlés</button>
-			<button on:click={createSampleTree} disabled={$algorithmStatus !== 'idle'} class="special-button">Minta fa</button>
-			<button on:click={resetTree} disabled={$algorithmStatus !== 'idle'} class="clear-button">Fa törlése</button>
+			<button on:click={insertElement} disabled={$algorithmStatus !== 'idle'}>Insert Node</button>
+			<button on:click={searchElement} disabled={$algorithmStatus !== 'idle'}>Search Node</button>
+			<button on:click={deleteElement} disabled={$algorithmStatus !== 'idle'}>Delete Node</button>
+			<button on:click={createSampleTree} disabled={$algorithmStatus !== 'idle'} class="special-button">Sample Tree</button>
+			<button on:click={resetTree} disabled={$algorithmStatus !== 'idle'} class="clear-button">Delete Tree</button>
 
 		</div>
 	</div>

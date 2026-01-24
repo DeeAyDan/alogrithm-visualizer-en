@@ -57,7 +57,7 @@
 	function insertNewCoin() {
 		if (newCoin > 0) {
 			if (exchangeCoins.includes(Number(newCoin))) {
-				consoleLog.update((logs) => [...logs, 'Ez az érme már szerepel a listában!']);
+				consoleLog.update((logs) => [...logs, 'This coin is already in the list!']);
 				showInsertForm = false;
 				return;
 			}
@@ -93,7 +93,7 @@
 	async function startAlgorithm(event) {
 		consoleLog.set([]);
 		currentStep.set(0);
-		consoleLog.update((logs) => [...logs, `${displayName} indítása...`]);
+		consoleLog.update((logs) => [...logs, `Starting ${displayName}...`]);
 
 		showInsertForm = false;
 		showDeleteList = false;
@@ -106,7 +106,7 @@
 
 		activeLine.set({ start: -1, end: -1 });
 
-		consoleLog.update((logs) => [...logs, 'A futás befejeződött!']);
+		consoleLog.update((logs) => [...logs, 'The run has finished!']);
 		algorithmStatus.set('finished');
 		await restartAlgorithm();
 	}
@@ -145,7 +145,7 @@
 			await delay(700 - get(speed) * 8);
 			await pauseIfNeeded();
 
-			log(`Összeg: ${i}, Minimum érme: ${dp[i]}, Utolsó érme: ${lastCoin[i]}`);
+			log(`Amount: ${i}, Minimum coins: ${dp[i]}, Last coin: ${lastCoin[i]}`);
 		}
 
 		usedCoins = [];
@@ -157,15 +157,15 @@
 				await delay(700 - get(speed) * 8);
 				await pauseIfNeeded();
 
-				consoleLog.update((logs) => [...logs, 'Nem lehet pontosan felváltani!']);
+				consoleLog.update((logs) => [...logs, 'Cannot exchange exactly!']);
 				break;
 			}
 			usedCoins.push(coin);
 			current -= coin;
 		}
 
-		consoleLog.update((logs) => [...logs, `Minimum érme szám: ${usedCoins.length}`]);
-		consoleLog.update((logs) => [...logs, `Felhasznált érmék: ${usedCoins}`]);
+		consoleLog.update((logs) => [...logs, `Minimum coin count: ${usedCoins.length}`]);
+		consoleLog.update((logs) => [...logs, `Used coins: ${usedCoins}`]);
 	}
 
 	selectedAlgorithmSourceCode.set(
@@ -205,7 +205,7 @@
 
 <div class="custom-input">
 	<div>
-		<label for="order">Felváltandó:</label>
+		<label for="order">Amount to exchange:</label>
 		<input
 			id="order"
 			type="number"
@@ -216,23 +216,23 @@
 
 	<div class="custom-buttons">
 		<div class="button-group">
-			<button disabled={$algorithmStatus !== 'idle'} on:click={openInsertForm}>Beszúrás</button>
+			<button disabled={$algorithmStatus !== 'idle'} on:click={openInsertForm}>Insert</button>
 			{#if showInsertForm}
 				<div class="dropdown insert-dropdown">
-					<input type="number" placeholder="Érme értéke" bind:value={newCoin} />
-					<button on:click={insertNewCoin}>Hozzáadás</button>
+					<input type="number" placeholder="Coin value" bind:value={newCoin} />
+					<button on:click={insertNewCoin}>Add</button>
 				</div>
 			{/if}
 		</div>
 
 		<div class="button-group">
-			<button disabled={$algorithmStatus !== 'idle'} on:click={openDeleteList}>Kivétel</button>
+			<button disabled={$algorithmStatus !== 'idle'} on:click={openDeleteList}>Remove</button>
 			{#if showDeleteList}
 				<div class="dropdown">
 					{#each exchangeCoins as coin, index}
 						<div class="delete-item">
 							{coin}
-							<button on:click={() => deleteCoin(index)}>Törlés</button>
+							<button on:click={() => deleteCoin(index)}>Delete</button>
 						</div>
 					{/each}
 				</div>
@@ -245,8 +245,8 @@
 	<Controls {currentStep} {totalSteps} on:start={startAlgorithm} />
 	<div class="coin-visual">
 		<div class="left-container">
-			<div>Felhasználható</div>
-			<div>érmék</div>
+			<div>Available</div>
+			<div>coins</div>
 			<div class="exchange-coins">
 				{#each exchangeCoins as coin}
 					<div class="coin">
@@ -259,9 +259,9 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Összeg</th>
-						<th>Minimum érme</th>
-						<th>Utolsó érme</th>
+						<th>Amount</th>
+						<th>Minimum coins</th>
+						<th>Last coin</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -277,8 +277,8 @@
 		</div>
 		<div class="right-container">
 			<div class="exchange-field">
-				<div>Felváltandó: {moneyToExchange}</div>
-				<div>Felhasznált érmék:</div>
+				<div>Amount to exchange: {moneyToExchange}</div>
+				<div>Used coins:</div>
 				<div class="used-coins">
 					{#each usedCoins as coin}
 						<div class="coin">{coin}</div>
