@@ -1,8 +1,6 @@
 export const algorithmDisplayNames = {
 	avlTree: 'AVL Tree',
-	bTree: 'B-Tree',
 	bellmanFordShortestPath: 'Bellman–Ford Shortest Path',
-	binaryHeap: 'Binary Heap',
 	binaryTree: 'Binary Tree',
 	jarvisMarch: 'Jarvis March',
 	coinChange: 'Coin Change Algorithm',

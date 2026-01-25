@@ -79,7 +79,6 @@
 		<div class="algorithm-list {algorithmGroups.searchTrees ? 'visible' : ''}">
 			<button class="algorithm-button" on:click={() => selectAlgorithm('binaryTree')}>Binary Tree</button>
 			<button class="algorithm-button" on:click={() => selectAlgorithm('avlTree')}>AVL Tree</button>
-			<button class="algorithm-button" on:click={() => selectAlgorithm('bTree')}>B Tree</button>
 			<button class="algorithm-button" on:click={() => selectAlgorithm('redBlackTree')}>Red–Black Tree</button>
 		</div>
 	</div>
