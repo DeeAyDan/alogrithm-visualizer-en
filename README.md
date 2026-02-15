@@ -13,4 +13,4 @@ Algorithm Visualizer allows users to observe how algorithms operate in real time
 The application visualizes a wide range of classical algorithms and data structures commonly used in computer science.
 
 ## Github:
-https://github.com/DeeAyDan/algorithm-visualizer
+https://github.com/DeeAyDan/algorithm-visualizer-en

@@ -3,5 +3,5 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	base:"/algorithm-visualizer/"
+	base:"/algorithm-visualizer-en/"
 });
