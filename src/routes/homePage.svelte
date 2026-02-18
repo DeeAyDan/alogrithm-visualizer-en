@@ -1,14 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
 	import { marked } from 'marked';
+	import readme from '$lib/../static/README.md?raw';
 
-	let content = '';
-
-	onMount(async () => {
-		const res = await fetch('/README.md');
-		const text = await res.text();
-		content = await marked(text);
-	});
+	let content = marked(readme);
 </script>
 
 <div class="markdown">
