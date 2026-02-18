@@ -1,6 +1,6 @@
 <script>
 	import { marked } from 'marked';
-	import readme from '$lib/../static/README.md?raw';
+	import readme from '$lib/content/README.md?raw';
 
 	let content = marked(readme);
 </script>
