@@ -18,6 +18,11 @@
 	$: $isOpen, (algorithmMenuVisible = $isOpen);
 </script>
 
+<svelte:head>
+	<title>Algorithm Visualizer</title>
+	<meta name="description" content="Interactive algorithm visualizations" />
+</svelte:head>
+
 <main>
 	<Header />
 	<div class="page-body-container">
